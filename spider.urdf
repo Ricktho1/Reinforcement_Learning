@@ -1,0 +1,213 @@
+
+<robot name="spider">
+
+  <!-- Spider body (cylinder) -->
+  <link name="body">
+    <inertial>
+      <mass value="1.0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1.0" iyy="1.0" izz="1.0" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.1" length="0.05"/>
+      </geometry>
+      <material name="grey">
+        <color rgba="0.5 0.5 0.5 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Define 3 legs spaced at 120 degrees -->
+  
+  <!-- Leg 1 -->
+  <link name="thigh_leg1">
+    <inertial>
+      <mass value="0.5"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.1" iyy="0.1" izz="0.1" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.2 0.05 0.05"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+  </link>
+
+  <link name="shin_leg1">
+    <inertial>
+      <mass value="0.3"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.1" iyy="0.1" izz="0.1" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.2 0.05 0.05"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <!-- Hip joint connecting body to thigh of leg 1 at 0 degrees -->
+  <joint name="hip_joint_leg1" type="revolute">
+    <origin xyz="0.1 0 0" rpy="0 0 0"/>
+    <parent link="body"/>
+    <child link="thigh_leg1"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="1.0" velocity="1.0"/>
+  </joint>
+
+  <!-- Knee joint connecting thigh to shin of leg 1 -->
+  <joint name="knee_joint_leg1" type="revolute">
+    <origin xyz="0.2 0 0" rpy="0 0 0"/>
+    <parent link="thigh_leg1"/>
+    <child link="shin_leg1"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="1.0" velocity="1.0"/>
+  </joint>
+
+  <!-- Actuator for hip joint of leg 1 -->
+  <transmission type="SimpleTransmission">
+    <actuator name="hip_actuator_leg1"/>
+    <joint name="hip_joint_leg1"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+
+  <!-- Actuator for knee joint of leg 1 -->
+  <transmission type="SimpleTransmission">
+    <actuator name="knee_actuator_leg1"/>
+    <joint name="knee_joint_leg1"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+
+  <!-- Leg 2 -->
+  <link name="thigh_leg2">
+    <inertial>
+      <mass value="0.5"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.1" iyy="0.1" izz="0.1" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.2 0.05 0.05"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+  </link>
+
+  <link name="shin_leg2">
+    <inertial>
+      <mass value="0.3"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.1" iyy="0.1" izz="0.1" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.2 0.05 0.05"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <!-- Hip joint connecting body to thigh of leg 2 at 120 degrees -->
+  <joint name="hip_joint_leg2" type="revolute">
+    <origin xyz="0.1 0 0" rpy="0 0 2.0944"/> <!-- 120 degrees in radians -->
+    <parent link="body"/>
+    <child link="thigh_leg2"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="1.0" velocity="1.0"/>
+  </joint>
+
+  <!-- Knee joint connecting thigh to shin of leg 2 -->
+  <joint name="knee_joint_leg2" type="revolute">
+    <origin xyz="0.2 0 0" rpy="0 0 0"/>
+    <parent link="thigh_leg2"/>
+    <child link="shin_leg2"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="1.0" velocity="1.0"/>
+  </joint>
+
+  <!-- Actuator for hip joint of leg 2 -->
+  <transmission type="SimpleTransmission">
+    <actuator name="hip_actuator_leg2"/>
+    <joint name="hip_joint_leg2"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+
+  <!-- Actuator for knee joint of leg 2 -->
+  <transmission type="SimpleTransmission">
+    <actuator name="knee_actuator_leg2"/>
+    <joint name="knee_joint_leg2"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+
+  <!-- Leg 3 -->
+  <link name="thigh_leg3">
+    <inertial>
+      <mass value="0.5"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.1" iyy="0.1" izz="0.1" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.2 0.05 0.05"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+  </link>
+
+  <link name="shin_leg3">
+    <inertial>
+      <mass value="0.3"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.1" iyy="0.1" izz="0.1" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.2 0.05 0.05"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <!-- Hip joint connecting body to thigh of leg 3 at 240 degrees -->
+  <joint name="hip_joint_leg3" type="revolute">
+    <origin xyz="0.1 0 0" rpy="0 0 4.18879"/> <!-- 240 degrees in radians -->
+    <parent link="body"/>
+    <child link="thigh_leg3"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="1.0" velocity="1.0"/>
+  </joint>
+
+  <!-- Knee joint connecting thigh to shin of leg 3 -->
+  <joint name="knee_joint_leg3" type="revolute">
+    <origin xyz="0.2 0 0" rpy="0 0 0"/>
+    <parent link="thigh_leg3"/>
+    <child link="shin_leg3"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="1.0" velocity="1.0"/>
+  </joint>
+
+  <!-- Actuator for hip joint of leg 3 -->
+  <transmission type="SimpleTransmission">
+    <actuator name="hip_actuator_leg3"/>
+    <joint name="hip_joint_leg3"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+
+  <!-- Actuator for knee joint of leg 3 -->
+  <transmission type="SimpleTransmission">
+    <actuator name="knee_actuator_leg3"/>
+    <joint name="knee_joint_leg3"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+
+</robot>
