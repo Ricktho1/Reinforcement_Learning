@@ -1,7 +1,7 @@
 import pybullet as p
-import time
 import pybullet_data
 import numpy as np
+import time
 
 # Set up PyBullet simulation environment
 p.connect(p.GUI)  # Connect to PyBullet GUI
@@ -46,23 +46,8 @@ def push_button():
         p.resetBasePositionAndOrientation(button_id, button_original_pos, button_start_orientation)
         is_button_pushed = False
 
-# Main simulation loop
-push_interval = 2.0  # Push the button every 2 seconds
-last_push_time = time.time()
-
-# for i in range(10000):
-#     p.stepSimulation()
-    
-#     # Check if the interval has passed to push/release the button
-#     current_time = time.time()
-#     if current_time - last_push_time > push_interval:
-#         push_button()  # Push or release the button
-#         last_push_time = current_time  # Reset the timer
-    
-#     # Debug print to track the simulation steps
-#     if i % 500 == 0:
-#         print(f"Simulation step: {i}, Button pushed: {is_button_pushed}")
-    
-#     time.sleep(1./240.)  # Sleep to match the real-time simulation speed
-
-# p.disconnect()
+for step in range(500):
+    focus_position,_=p.getBasePositionAndOrientation(spider_id)
+    p.resetDebugVisualizerCamera(3, 30, -40, focus_position)
+    p.stepSimulation()
+    time.sleep(0.01)
